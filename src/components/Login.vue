@@ -40,7 +40,7 @@ export default {
     },
     methods:{
         onSubmit(){
-            axios.get("/user.json").then(res=>{
+            axios.get("/login").then(res=>{
                 // console.log(res.data);
                 const users=[];
                 const data = res.data;
@@ -63,6 +63,10 @@ export default {
                     this.$store.dispatch("setUser",null)
                 }
             })
+
+            // axios.get("/login").then(res=>{
+            //     console.log("res=",res)
+            // })
         }
     }
 }

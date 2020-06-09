@@ -8,7 +8,8 @@ import {store} from './store/store'
 Vue.use(VueRouter)
 
 //配置默认根路径
-axios.defaults.baseURL= 'https://wd6476367811srrfgf.wilddogio.com/'
+// axios.defaults.baseURL= 'https://wd6476367811srrfgf.wilddogio.com/'
+axios.defaults.baseURL= 'http://localhost:4000'
 
 //配置Vue原型（你在任何的组件都可以使用axios，如：this.http() http是你自己起名的 ）
 Vue.prototype.http = axios

@@ -44,7 +44,8 @@ export default {
                     password:this.password,
                     confirmPassword: this.confirmPassword
                 }
-                axios.post("/user.json",formData)
+                console.log("formData==",formData);
+                axios.post("/register",formData)
                 .then(res=>{
                     this.$router.push({name:"loginLink"})
                 })

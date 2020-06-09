@@ -87,8 +87,9 @@ export default {
             // })
 
             // 数据同步到vueX
-            this.http.post("menu.json",data)
+            this.http.post("/menu",data)
             .then(res =>{
+                console.log("res.pizaa=",data)
                 this.$store.commit("pushToMenuItems",data);
             })
 

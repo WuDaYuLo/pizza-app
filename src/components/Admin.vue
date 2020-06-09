@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{item.name}}</td>
                         <td>
-                            <button @click="deleteData(item)" class="btn btn-sm btn-outline-danger">&times</button>
+                            <button @click="deleteData(item)" class="btn btn-sm btn-outline-danger">&times;</button>
                         </td>
                     </tr>
                 </tbody>
@@ -49,7 +49,7 @@ export default {
         },
     },
     created(){
-        fetch("https://wd6476367811srrfgf.wilddogio.com/menu.json")
+        fetch("http://localhost:4000/menu")
         .then(res => {
             return res.json()
         })
@@ -69,7 +69,7 @@ export default {
     },
     methods:{
         deleteData(item){
-            fetch("https://wd6476367811srrfgf.wilddogio.com/menu/"+ item.id +"/.json",{
+            fetch("http://localhost:4000/deleteMenu/"+ item.id,{
                 method:"DELETE",
                 headers:{
                     'Content-type':"application/json"

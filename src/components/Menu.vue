@@ -101,9 +101,31 @@ export default {
 
             // this.http.get("menu.json").then(res => this.getMenuItem = res.data)
             // 将请求下来的数据存储在vuex中
-            this.http.get("menu.json")
+            this.http.get("/menu")
                 .then(res => {
-                    this.$store.commit("setMenuItems",res.data)
+                    
+
+
+                    console.log("data=",res.data);
+
+                    var dataArr =[];
+                    for(var i=0;i<res.data.length;i++){
+                        
+                        dataArr[i] = {
+                            'name':res.data[i].name,
+                            'description':res.data[i].description,
+                            'options':[{
+                                'size':res.data[i].size_one,
+                                'price':res.data[i].price_one,
+                            },{
+                                'size':res.data[i].size_two,
+                                'price':res.data[i].price_two,
+                            }]
+                        }
+                    }
+
+                    console.log("dataArr=",dataArr);
+                    this.$store.commit("setMenuItems",dataArr)
                  })
         },
         addToBasket(item,option){
