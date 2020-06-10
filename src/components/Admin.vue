@@ -29,6 +29,7 @@
 
 <script>
 import NewPizza from './NewPizza'
+import axios  from "axios"
 export default {
     data(){
         return{
@@ -49,39 +50,66 @@ export default {
         },
     },
     created(){
-        fetch("http://localhost:4000/menu")
-        .then(res => {
-            return res.json()
-        })
-        .then(data => {
-            let menuItemArray =[];
-            for(var key in data){
-                // console.log(data[key])
-                data[key].id = key;
-                menuItemArray.push(data[key]);
-            }
+        this.initData();
+        // .then(data => {
+        //     console.log("data==",data)
+        //     let menuItemArray =[];
+        //     for(var key in data){
+        //         // console.log(data[key])
+        //         data[key].id = key;
+        //         menuItemArray.push(data[key]);
+        //     }
 
-            // this.getMenuItem = menuItemArray;
+        //     // this.getMenuItem = menuItemArray;
 
-            // 数据同步
-            this.$store.commit("setMenuItems",menuItemArray)
-        })
+        //     // 数据同步
+        //     this.$store.commit("setMenuItems",menuItemArray)
+        // })
     },
     methods:{
+        initData(){
+
+            axios("http://localhost:4000/menu")
+            .then(res => {
+                console.log("created==",res.data)
+                let menuItemArray = res.data;
+                this.getMenuItem = res.data;
+                // 数据同步
+                this.$store.commit("setMenuItems",menuItemArray)
+                // return res.json()
+            })
+        },
         deleteData(item){
-            fetch("http://localhost:4000/deleteMenu/"+ item.id,{
-                method:"DELETE",
-                headers:{
-                    'Content-type':"application/json"
+            console.log(item)
+
+            axios.delete('/deleteMenu',{
+                params: {	// 请求参数放在请求体
+                    id: item.id
+                }
+            }).then(res => {
+                console.log("res==",res);
+                if(res.data.code == 200){
+                    // 数据同步
+                    // this.$store.commit("setMenuItems",menuItemArray)
+                    this.initData();
                 }
             })
-            .then(res => res.json())
-            // .then(data =>this.$router.push({name:"menuLink"}))
-            .then(data =>{
-                this.$store.commit("removeMenuItems",item)
-            })
-            // .then(data => console.log(data))
-            .catch(err => console.log(err))
+
+
+
+            // fetch("http://localhost:4000/deleteMenu/"+ item.id,{
+            //     method:"DELETE",
+            //     headers:{
+            //         'Content-type':"application/json"
+            //     }
+            // })
+            // .then(res => res.json())
+            // // .then(data =>this.$router.push({name:"menuLink"}))
+            // .then(data =>{
+            //     this.$store.commit("removeMenuItems",item)
+            // })
+            // // .then(data => console.log(data))
+            // .catch(err => console.log(err))
         }
     },
     components:{
